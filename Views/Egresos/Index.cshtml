@@ -1,0 +1,118 @@
+﻿@model IEnumerable<ControlStock.Models.Egresos>
+
+@{
+    var printUrl = TempData["PrintUrl"] as string;
+    ViewData["Title"] = "Entregas";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<div class="d-sm-flex justify-content-between">
+    <h1>Engregas</h1>    
+</div>
+
+<div class="d-sm-flex justify-content-between mb-2">
+    <a asp-action="Create">Nueva Entrega</a>
+    <div class="d-flex gap-1">
+        <label class="align-self-center">Deposito:</label>
+        <select id="deposito" class="form-select" asp-items="ViewBag.depositos">          
+        </select>
+    </div>
+</div>
+<table class="table table-hover" id="tabla1">
+    <thead>
+        <tr>
+            <th>
+               Comprobante
+            </th>
+            <th>
+               Fecha de Egreso
+            </th>
+            <th>
+                Destino
+            </th>            
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+
+    </tbody>
+</table>
+
+@* Verifica si hay una URL de reporte almacenada en TempData *@
+@if (!string.IsNullOrEmpty(printUrl))
+{
+    <script type="text/javascript">
+        window.onload = function () {
+            var win = window.open('@printUrl', '_blank');
+            win.onload = function () {
+                win.print();
+            };
+        };
+    </script>
+}
+
+<script>
+    var detallesData;   
+    $(document).ready(function () {
+        var indice = parseInt($('#deposito').val());
+        var URL =  '/Egresos/DatosTable/?ScopeID=' + indice;
+        var table = new DataTable('#tabla1', {        
+            language: {
+                url: '../../lib/DataTables/Language.json',
+            },
+            scrollY: "45vh",
+            responsive: true,
+            deferRender: true,   
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: URL,
+                type: 'POST',
+                dataSrc: 'data'
+            },
+            columns: [
+                { data: 'egresoId' },
+                {
+                    data: 'fechaEgreso',
+                    render: function (data, type, row) {
+                        if (data) {
+                            var date = new Date(data);
+                            var day = String(date.getDate()).padStart(2, '0');
+                            var month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses comienzan en 0
+                            var year = date.getFullYear();
+                            return `${day}/${month}/${year}`;
+                        }
+                        return data;
+                    }
+                },
+                { data: 'destinoScope.scopeName' },            
+                {
+                    data: 'egresoId',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        return `
+                                    <a href='/Egresos/Details/${data}' style='text-decoration: none; color:black' data-bs-toggle='tooltip' data-bs-title='Ver Detalle'>
+                                        <i class='fa fa-search' aria-hidden='true'></i>
+                                    </a> |
+                                    <a href='/Egresos/Delete/${data}' style='text-decoration: none; color:black' data-bs-toggle='tooltip' data-bs-title='Eliminar'>
+                                        <i class='fa fa-trash'></i>
+                                    </a>
+                                `;
+                    }
+                }
+            ],
+            rowCallback: function (row, data, index) {
+                $(row).on('click', function () {
+                    window.location.href = `/Egresos/Details/${data.egresoId}`;
+                });
+            }
+       });
+            // Escuchar el evento de cambio en el select con id 'deposito'
+        $('#deposito').change(function () {
+            var indice = parseInt($(this).val());
+            table.ajax.url('/Egresos/DatosTable/?ScopeID=' + indice).load();
+        });
+    });
+    
+</script>

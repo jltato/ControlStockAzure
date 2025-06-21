@@ -1,0 +1,105 @@
+﻿@model ControlStock.Models.Articulo
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<h4>Articulo</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger">Nombre</div>
+            <input type="hidden" asp-for="IdArticulo" />
+            <input asp-for="UserId" type="hidden" value="@ViewBag.UserId" />
+            <div class="form-group">
+                <label asp-for="Nombre" class="control-label">Nombre</label>
+                <input asp-for="Nombre" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descripcion" class="control-label">Descripción</label>
+                <input asp-for="Descripcion" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>  
+            <div class="form-group">
+                <label asp-for="Marca.Rubro" class="control-label "> Rubro
+                    <span data-bs-toggle="tooltip" data-bs-title="Agregar Rubro">
+                        <a asp-controller="Rubroes" asp-action="Create" class="align-self-center fa fa-plus-circle" style="text-decoration: none;"></a>
+                    </span>
+                </label>
+                <select id="rubroSelect" asp-for="Marca.IdRubro" class="form-control chosen-select" asp-items="ViewBag.IdRubro"></select>
+                <span asp-validation-for="Marca.IdRubro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="IdMarca" class="control-label"> Marca
+                    <span data-bs-toggle="tooltip" data-bs-title="Agregar Marca">
+                        <a asp-controller="Marca" asp-action="Create" class="align-self-center fa fa-plus-circle" style="text-decoration: none;"></a>
+                    </span>
+                </label>
+                <select id="marcaSelect" asp-for="IdMarca" class="form-control chosen-select" asp-items="ViewBag.IdMarca"></select>
+                <span asp-validation-for="IdMarca" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="StockMin" class="control-label">Stock Minimo</label>
+                <input type="number" asp-for="StockMin" class="form-control" autocomplete="off" />
+                <span asp-validation-for="StockMin" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">Visible sin stock</label>
+                <input class="form-check-input" asp-for="Activo" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Observaciones" class="control-label">Observaciones</label>
+                <textarea asp-for="Observaciones" class="form-control" rows="2"></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+
+            <div class="form-group my-3">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+    $(document).ready(function () {
+        $('#rubroSelect').change(function () {
+            var $marcaSelect = $('#marcaSelect');
+            $marcaSelect.empty();
+            var idRubro = $(this).val();
+            if (idRubro) {
+                $.ajax({
+                    url: '@Url.Action("GetMarcasPorRubro", "Articulo")',
+                    type: 'GET',
+                    dataType: 'json',
+                    data: { idRubro: idRubro },
+                    success: function (data) {
+
+                        $('#marcaSelect').prop('disabled', false);
+                        $marcaSelect.append('<option value="">Seleccione una Marca</option>');
+                        $.each(data, function (index, marca) {
+                            $marcaSelect.append('<option value="' + marca.idMarca + '">' + marca.marcaName + '</option>');
+                        });
+                        $('#marcaSelect').trigger("chosen:updated");
+                    },
+                    error: function (xhr, status, error) {
+                        console.log('Error: ' + error);
+                    }
+                });
+            } else {
+                $('#marcaSelect').empty().append('<option value="">Seleccione una Marca</option>');
+            }
+        });
+    });
+</script>

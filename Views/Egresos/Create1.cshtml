@@ -1,0 +1,139 @@
+﻿@model ControlStock.Models.Egresos
+
+@{
+    ViewData["Title"] = "Egresos";
+    Layout="~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Egresos</h1>
+
+<h4>Entega de Mercaderia</h4>
+<hr />
+
+<div class="row">
+    <form asp-action="Create">
+    <div class="col-md-4">       
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserID" />
+            <div class="form-group">
+                <label asp-for="FechaEgreso" class="control-label">Fecha de Entrega</label>
+                <input asp-for="FechaEgreso" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm")" />
+                <span asp-validation-for="FechaEgreso" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="ScopeId" class="control-label">Deposito</label>
+                <select asp-for="ScopeId" class ="form-control" asp-items="ViewBag.depositos"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Destino" class="control-label">Destino</label>
+                <select asp-for="Destino" class="form-control" asp-items="ViewBag.destinos"></select>
+                <span asp-validation-for="Destino" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observaciones" class="control-label">Observaciones</label>
+                <textarea rows="2" asp-for="Observaciones" class="form-control"></textarea>
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+    </div>
+        <div class="form-control my-2">
+            <h4>Carga de Productos</h4>
+            <div class="gx-2 row">
+                <div class="col-sm form-group">
+                    <label for="rubroSelect" class="">Rubro</label>
+                    <select id="rubroSelect" class="form-control chosen-select" asp-items="ViewBag.Rubros">
+                        <option value="">Seleccione Rubro</option>
+                    </select>
+                </div>
+                <div class="col-sm form-group">
+                    <label for="marcaSelect">Marca</label>
+                    <select id="marcaSelect" class="form-control chosen-select" disabled>
+                        <option>Seleccione Marca</option>
+                    </select>
+                </div>
+                <div class="col-sm form-group">
+                    <label for="articuloSelect">Artículo</label>
+                    <select id="articuloSelect" class="form-control chosen-select" disabled requi>
+                        <option value="0">Seleccione Artículo</option>
+                    </select>
+                    <span for="articuloSelect" id="articulo-error" class="text-danger"></span>
+                </div>
+                <div class="col-sm form-group">
+                    <label class="d-flex justify-content-between w-100">Lote</label>
+                    <select id="loteSelect" class="form-control chosen-select" disabled>
+                        <option value="">Ninguno</option>
+                    </select>
+                </div>
+                <div class="col-sm form-group ">
+                    <label for="cantidad">Cantidad</label>
+                    <input type="number" id="cantidad" class="form-control" min="0" />
+                    <span for="cantidad" id="cantidad-error" class="text-danger"></span>
+                </div>
+
+            </div>
+            <div class="d-sm-flex gap-2 mt-2 col-sm-3">
+                <label for="stock" class="col-form-label fs-4" style="text-wrap:nowrap">Stock Actual:</label>
+                <input type="number" id="stock" class=" form-control fw-bolder text-center fs-4" readonly min="0" />
+            </div>
+            <div>
+                <div class="d-flex justify-content-end mt-2">
+                    <button type="button" id="agrego" class="btn btn-primary">Agregar al Listado</button>
+                    <button type="button" id="agregarEgresoBtn" class="btn btn-primary d-none"></button>
+                </div>
+            </div>
+        </div>
+
+        <table class="table" id="detallesTable">
+            <thead>
+                <tr>
+                    <th>Artículo</th>
+                    <th>Marca</th>
+                    <th>Lote</th>
+                    <th>Cantidad</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+
+        <br /><br />
+        <div class="form-group">
+            <input type="submit" value="Guardar Egreso" class="btn btn-success my-3" />
+        </div>
+    </form>
+    </div>
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+
+<script>
+
+    var detallesData = @Html.Raw(Json.Serialize(ViewBag.DetalleEgreso));
+
+    $("#agrego").on("click", function () {
+        // Obtener los valores y convertirlos a números
+        var cantidad = parseFloat($("#cantidad").val()) || 0;
+        var stock = parseFloat($("#stock").val()) || 0;
+
+        if (cantidad > 0) {
+            if (cantidad <= stock) {
+                // Si la cantidad es válida y está dentro del stock disponible, agrega el detalle
+                $("#agregarEgresoBtn").click();
+                $('#cantidad-error').text(""); // Limpiar cualquier error previo
+            } else {
+                // Si la cantidad excede el stock, muestra un mensaje de error
+                $('#cantidad-error').text("El stock no es suficiente");
+            }
+        } else {
+            // Si la cantidad es 0 deja el error para la funcion agregardetallebtn
+            $("#agregarEgresoBtn").click();
+            $('#cantidad-error').text(""); // Limpiar cualquier error previo
+        }
+    });
+
+</script>

@@ -1,0 +1,225 @@
+﻿@model ControlStock.Models.Egresos
+
+@{
+    ViewData["Title"] = "Reporte de Egreso";
+    Layout = null; // Deshabilitar el layout si no se necesita
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=0.7"/>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css"/>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="~/ControlStock.styles.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/reprotes.css" asp-append-version="true"/>
+    <style>
+        
+       .page {
+            page-break-after: always;
+        }
+        .no-break {
+            page-break-inside: avoid;
+        }
+    </style>
+</head>
+
+
+<body class=" d-flex flex-column ">
+    <div id="div1" class="h-50 d-flex flex-column no-break">
+        
+    <header class="d-sm-flex justify-content-between pe-5">
+        <div class=" d-flex flex-column text-center px-3">          
+           <img class="align-self-center" src="~/images/Penitenciaria-removebg-preview.png" width="70px" alt="Logo" />
+            <span class=" fw-bold"> Servicio Penitenciario de Córdoba  </span>
+            <span> Dirección de Administración</span>
+            <span>@ViewBag.seccion</span>                              
+        </div>
+            <dl class="row text-nowrap col-sm-6 mt-4">
+                <dt class="col-sm-5">
+                    Orden de Entrega Nº:
+                </dt>
+                <dd class="col-sm-7 fw-bold">
+                    @Html.DisplayFor(model => model.EgresoId)
+                </dd>
+                <dt class="col-sm-5">
+                    Deposito:
+                <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.Scope.ScopeName)
+                </dd>
+                <dt class="col-sm-5">
+                    Fecha y Hora:
+                </dt>
+                <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FechaEgreso) hs.
+                </dd>
+                <dt class="col-sm-5">
+                    Destino:
+                </dt>
+                <dd class="col-sm-7 text-wrap">
+                        @Html.DisplayFor(model => model.DestinoScope.ScopeName)
+                </dd>
+                
+            </dl>
+
+    </header>
+
+    <div class="report-container flex-grow-1">
+        <h1 class="text-center fw-bold fs-4 mb-2">REMITO</h1>
+        <table class="tables">
+            <thead>
+                <tr>
+                    <th>
+                        Artículo
+                    </th>
+                    <th>
+                        Lote
+                    </th>
+                    <th>
+                        Cantidad
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var detalle in Model.DetalleEgresos)
+                {
+                    <tr>
+                        <td>
+                            @detalle.Articulo.Nombre
+                        </td>
+                        <td>
+                            @detalle.Lote?.NumeroLote
+                        </td>
+                        <td class="text-end">
+                            @detalle.Cantidad
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <div>
+            Observaciones: @Model.Observaciones
+        </div>
+       
+    </div>
+    <div class="d-flex justify-content-evenly footer mt-auto">
+        <div class="col-3 text-center d-flex flex-column ">
+            <hr />
+            <span>Entregado</span>
+            <span>Firma y Aclaracion</span>
+        </div>
+        <div class="col-3 text-center d-flex flex-column">
+            <hr />
+            <span>Recibido</span>
+            <span>Firma y Aclaracion</span>
+        </div>
+    </div>
+    </div>
+
+    <hr />
+    <!-- Div condicional para salto de página -->
+    <div id="conditional-break"></div>
+
+    <div id="div2" class=" h-50 d-flex flex-column no-break">
+        <header class="d-sm-flex justify-content-between pe-5">
+            <div class=" d-flex flex-column text-center  px-3">
+                <img class="align-self-center" src="~/images/Penitenciaria-removebg-preview.png" width="70px" alt="Logo" />
+                <span class=" fw-bold"> Servicio Penitenciario de Córdoba  </span>
+                <span> Dirección de Administración</span>
+                <span>@ViewBag.seccion</span>
+            </div>
+            <dl class="row text-nowrap col-sm-6 mt-4">
+                <dt class="col-sm-5">
+                    Orden de Entrega Nº:
+                </dt>
+                <dd class="col-sm-7 fw-bold">
+                    @Html.DisplayFor(model => model.EgresoId)
+                </dd>
+                <dt class="col-sm-5">
+                    Deposito:
+                <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.Scope.ScopeName)
+                </dd>
+                <dt class="col-sm-5">
+                    Fecha y Hora:
+                </dt>
+                <dd class="col-sm-7">
+                        @Html.DisplayFor(model => model.FechaEgreso) hs.
+                </dd>
+                <dt class="col-sm-5">
+                    Destino:
+                </dt>
+                <dd class="col-sm-7 text-wrap">
+                        @Html.DisplayFor(model => model.DestinoScope.ScopeName)
+                </dd>
+            </dl>
+
+        </header>
+        <div class="report-container flex-grow-1">
+            <h1 class="text-center fw-bold fs-4 mb-2">REMITO</h1>
+            <table class="tables">
+                <thead>
+                    <tr>
+                        <th>
+                            Artículo
+                        </th>
+                        <th>
+                            Lote
+                        </th>
+                        <th>
+                            Cantidad
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detalle in Model.DetalleEgresos)
+                    {
+                        <tr>
+                            <td>
+                                @detalle.Articulo.Nombre
+                            </td>
+                            <td>
+                                @detalle.Lote?.NumeroLote
+                            </td>
+                            <td class="text-end">
+                                @detalle.Cantidad
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                Observaciones: @Model.Observaciones
+            </div>
+        </div>
+        <div class="d-flex justify-content-evenly footer mt-auto">
+            <div class="col-3 text-center d-flex flex-column ">
+                <hr />
+                <span>Entregado</span>
+                <span>Firma y Aclaracion</span>
+            </div>
+            <div class="col-3 text-center d-flex flex-column">
+                <hr />
+                <span>Recibido</span>
+                <span>Firma y Aclaracion</span>
+            </div>
+        </div>
+    </div>
+@*     <script>
+        window.onload = function () {
+            const div1 = document.getElementById('div1');
+            const div2 = document.getElementById('div2');
+            const conditionalBreak = document.getElementById('conditional-break');
+
+            const list1Height = div1.offsetHeight;
+            const list2Height = div2.offsetHeight;
+            const pageHeight = 1822; // tamaño aproximado de una hoja A4 en pixels para 96 DPI
+
+            if (list1Height + list2Height > pageHeight) {
+                conditionalBreak.style.cssText = 'page-break-before: always;';
+            }
+        };
+    </script> *@
+</body>
+</html>

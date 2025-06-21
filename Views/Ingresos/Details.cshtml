@@ -1,0 +1,82 @@
+﻿@model ControlStock.Models.Ingresos
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>Ingresos</h4>
+    <hr />
+    <dl class="row ">
+        <dt class="col-sm-2">
+            Comprobante:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comprobante)
+        </dd>
+        <dt class="col-sm-2">
+           Id Ingreso:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.IngresoId)
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha Ingreso:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaIngreso) hs.
+        </dd>
+        <dt class = "col-sm-2">
+           Proveedor:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proveedor.ProveedorName)
+        </dd>
+        <dt class="col-sm-2">
+            Observaciones:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+    </dl>
+    <!-- Listado de productos -->
+    <h3>Productos</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Artículo
+                </th>
+                <th>
+                    N° Lote/Serie
+                </th>
+                <th>
+                    Cantidad
+                </th>               
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in ViewBag.Productos)
+            {
+                <tr>
+                    <td>
+                        @detalle.Articulo.Nombre
+                    </td>
+                    <td>
+                        @detalle.Lote?.NumeroLote
+                    </td>
+                    <td>
+                        @detalle.Cantidad
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+   
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IngresoId">Editar</a> |
+    <a asp-action="Index">Volver al listado</a>
+</div>

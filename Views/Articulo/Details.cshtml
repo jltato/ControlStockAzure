@@ -1,0 +1,60 @@
+﻿@model ControlStock.Models.Articulo
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalle de Artículo</h1>
+
+<div>
+    <h4>Articulo</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Nombre)
+        </dd>
+        <dt class = "col-sm-2">
+            Descripción:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Descripcion)
+        </dd>       
+        <dt class = "col-sm-2">
+            Marca:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Marca.MarcaName)
+        </dd>
+        <dt class = "col-sm-2">
+            Rubro:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Marca.Rubro.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Visible sin Stock
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Activo)
+        </dd>
+        <dt class="col-sm-2">
+            Stock Minimo:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.StockMin)
+        </dd>
+        <dt class="col-sm-2">
+            Observaciones:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdArticulo">Modificar</a> |
+    <a asp-action="Index">Volver al Listado</a>
+</div>

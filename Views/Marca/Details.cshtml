@@ -1,0 +1,30 @@
+﻿@model ControlStock.Models.Marca
+
+@{
+    ViewData["Title"] = "Detalle";
+}
+
+<h1>Detalle de Marca</h1>
+
+<div>
+    <h4>Marca</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.MarcaName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.MarcaName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rubro)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rubro.Name)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.IdMarca">Modificar</a> |
+    <a asp-action="Index">Volver al Listado</a>
+</div>

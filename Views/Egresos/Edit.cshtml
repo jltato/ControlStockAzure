@@ -1,0 +1,60 @@
+﻿@model ControlStock.Models.Egresos
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Entregas</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EgresoId" />
+            <div class="form-group">
+                <label asp-for="FechaEgreso" class="control-label"></label>
+                <input asp-for="FechaEgreso" class="form-control" />
+                <span asp-validation-for="FechaEgreso" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ScopeId" class="control-label"></label>
+                <select asp-for="ScopeId" class="form-control" asp-items="ViewBag.ScopeId"></select>
+                <span asp-validation-for="ScopeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Observaciones" class="control-label"></label>
+                <input asp-for="Observaciones" class="form-control" />
+                <span asp-validation-for="Observaciones" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Timestamp" class="control-label"></label>
+                <input asp-for="Timestamp" class="form-control" />
+                <span asp-validation-for="Timestamp" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="EliminadoLogico" /> @Html.DisplayNameFor(model => model.EliminadoLogico)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

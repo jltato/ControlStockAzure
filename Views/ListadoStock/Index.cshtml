@@ -1,0 +1,150 @@
+﻿
+@model ICollection<ControlStock.Models.DTOs.ListadoStock>;
+
+@{
+    ViewData["Title"] = "Listado";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Listado de Stock</h1>
+
+<div class="d-sm-flex justify-content-end">
+    <div class="d-flex gap-1">
+        <label class="align-self-center">Deposito:</label>
+        <select id="deposito" class="form-select" asp-items="ViewBag.depositos">
+        </select>
+    </div>
+</div>   
+
+@* <a asp-action="Create">Agregar Artículo Nuevo</a> *@
+<div>
+<table class="table table-hover" id="tabla1" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Id
+            </th>
+            <th>
+                Artículo
+            </th>
+            <th>
+                Marca
+            </th>
+            <th>
+                Rubro
+            </th>
+            <th class="text-start">
+                Cantidad
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+       
+    </tbody>
+</table>
+@* <div class="d-sm-flex justify-content-center">
+        <button type="button" id="imprimirListado" class="btn btn-success" >Imprimir</button>
+</div> *@
+</div>
+
+
+
+<script>
+    var detallesData;
+    $(document).ready(function () {
+        var windowHeight = $(window).height();
+        var tableOffsetTop = $('#tabla1').offset().top;
+        var availableHeight = windowHeight - tableOffsetTop - 250;
+        var indice = parseInt($('#deposito').val());
+        var URL = '/ListadoStock/DatosTable/?ScopeID=' + indice;
+        var table = new DataTable('#tabla1', {
+            language: {
+                url: '../../lib/DataTables/Language.json',
+            },  
+            lengthMenu: [10, 25, 50, 100, { label: 'Todos', value: -1 }],
+            pageLength: 50,
+            scrollY: availableHeight + "px",
+            responsive: true,
+            deferRender: true,
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url: URL,
+                type: 'POST',
+                dataSrc: 'data'
+            },
+            columns: [
+                { data: 'articuloId' },
+                { data: 'articulo' },
+                { data: 'marca' },
+                { data: 'rubro' },
+                { data: 'cantidad' },
+                {
+                    data: 'articuloId',
+                    orderable: false,
+                    searchable: false,
+                    render: function (data, type, row) {
+                        return `
+                                        <a href='/Articulo/Edit/${data}' style='text-decoration: none; color:black' data-bs-toggle="tooltip" data-bs-title="Editar">
+                                        <i class='fa fa-pencil-square-o'></i>
+                                    </a> 
+                                    </a> |
+                                        <a href="/Articulo/Delete/${data}" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Eliminar">
+                                        <i class='fa fa-trash'></i>
+                                    </a>
+                                `;
+                    }
+                }
+            ],
+            rowCallback: function (row, data, index) {
+                $(row).on('click', function () {
+                    window.location.href = `/ListadoStock/Details/${data.articuloId}`;
+                });
+            },
+            layout: {
+                bottom2End: {
+                    buttons: [
+                                {
+                                    extend: 'print',
+                                    message: 'Listado de Stock',
+                                    messageTop: 'Stock',
+                                        customize: function (win) {
+                                            $(win.document.body).find('table').addClass('display').css('font-size', '9px');
+                                            $(win.document.body).find('tr:nth-child(odd) td').each(function (index) {
+                                                $(this).css('background-color', '#D0D0D0');
+                                            });
+                                            $(win.document.body).find('h1').css('text-align', 'center');
+                                            $(win.document.body).find('h1').text('Stock');
+                                        },
+                                        exportOptions: {
+                                            columns: [0, 1, 2, 4]
+                                        }
+                                    },
+                                    {
+                                        extend: 'excel',
+                                        message: 'Stock',
+                                        messageTop: 'Listado de Articulos',
+                                        exportOptions: {
+                                            columns: [0, 1, 2, 4]
+                                        }
+                                    }
+                            ]
+                    }
+                }
+            });
+        // Escuchar el evento de cambio en el select con id 'deposito'
+        $('#deposito').change(function () {
+            var indice = parseInt($(this).val());
+            table.ajax.url('/ListadoStock/DatosTable/?ScopeID=' + indice).load();
+        });
+
+        $("#imprimirListado").on("click", function(){
+                var depositoId = $("#deposito").val();
+                if (depositoId) {
+                       var url = '@Url.Action("Stock", "Reportes")' + '?deposito=' + depositoId;
+                    window.location.href = url
+                }
+        });
+    });
+</script>

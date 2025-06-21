@@ -1,0 +1,28 @@
+﻿@model ControlStock.Models.Rubro
+
+@{
+    ViewData["Title"] = "Borrar";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Borrar</h1>
+
+<h3>Seguro que desea borrar este Rubro?</h3>
+<div>
+    <h4>Rubro</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Rubro
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdRubro" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver al Listado</a>
+    </form>
+</div>

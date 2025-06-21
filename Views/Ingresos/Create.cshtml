@@ -1,0 +1,165 @@
+﻿@model ControlStock.Models.Ingresos;
+@using ControlStock.Models;
+
+@{
+    ViewData["Title"] = "Nuevo Ingreso";
+}
+
+<h1>Ingreso de Productos</h1>
+
+<h4>Ingreso</h4>
+<hr />
+<form asp-action="Create">
+    <input type="hidden" asp-for="UserId" value="@(ViewBag.UserId)" />
+    <div class="form-group col-lg-3">
+        <label asp-for="Comprobante">Comprobante</label>
+        <input asp-for="Comprobante" class="form-control" autocomplete="off" />
+        <span asp-validation-for="Comprobante" class="text-danger"></span>
+    </div>
+    <div class="form-group col-lg-3">
+        <label asp-for="FechaIngreso" class="form-label">Fecha de Ingreso</label>
+        <input asp-for="FechaIngreso" class="form-control" value="@((DateTime.Now).ToString("yyyy-MM-dd HH:mm"))" />
+        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+    </div>
+    <div class="form-group col-lg-3">
+        <label asp-for="ScopeId">Depósito</label>
+        <select asp-for="ScopeId" asp-items="ViewBag.Depositos" class="form-control">
+        </select>
+        <span asp-validation-for="ScopeId" class="text-danger"></span>
+    </div>
+    <div class="d-sm-flex gap-3 ">
+        <div class="form-group col-lg-3">
+            <label asp-for="ProveedorId" class="control-label">Proveedor</label>
+            <select asp-for="ProveedorId" asp-items="ViewBag.Proveedores" class="form-control chosen-select">
+                <option value="">Seleccione un Proveedor</option>                
+            </select>
+            <span asp-validation-for="ProveedorId" class="text-danger"></span>
+        </div>
+        <div class="align-self-end">
+            <a asp-controller="Proveedores" asp-action="Create">Agregar Proveedor</a>
+        </div>
+    </div>
+    <div class="form-group col-lg-3 mb-3">
+        <label asp-for="Observaciones" class="control-label">Observaciones</label>
+        <textarea asp-for="Observaciones" rows="2" class="form-control"></textarea>
+    </div>
+    <div class="form-control">
+        <h4>Carga de Productos</h4>
+        <div class="gx-2 row">
+            <div class="col-sm form-group">
+                <label for="rubroSelect" class="">Rubro</label>
+                <select id="rubroSelect" class="form-control chosen-select" asp-items="ViewBag.Rubros">
+                    <option value="">Seleccione Rubro</option>
+                </select>
+            </div>
+            <div class="col-sm form-group">
+                <label for="marcaSelect">Marca</label>
+                <select id="marcaSelect" class="form-control chosen-select" disabled>
+                    <option >Seleccione Marca</option>
+                </select>
+            </div>
+            <div class="col-sm form-group">
+                <label for="articuloSelect">Artículo</label>
+                <select id="articuloSelect" class="form-control chosen-select" disabled requi>
+                    <option value="0">Seleccione Artículo</option>
+                </select>
+                <span for="articuloSelect" id="articulo-error" class="text-danger"></span>
+            </div>
+            <div class="col-sm form-group">
+                <label class="d-flex justify-content-between w-100">
+                    N° Lote/Serie
+                    <div data-bs-toggle="tooltip" data-bs-title="Agregar Lote/Serie">
+                        <span type="button" class="align-self-center fa fa-plus-circle" data-bs-toggle="modal" data-bs-target="#createLoteModal"></span>
+                    </div>
+                </label>
+                <select id="loteSelect" class="form-control chosen-select" disabled>
+                    <option value="">Ninguno</option>
+                </select>
+            </div>
+            <div class="col-sm form-group ">
+                <label for="cantidad">Cantidad</label>
+                <input type="number" id="cantidad" class="form-control" min="0" />
+                <span for="cantidad" id="cantidad-error" class="text-danger"></span>
+            </div>
+
+        </div>
+
+        <div>
+            <div class="d-flex justify-content-end mt-2">
+                <button type="button" id="agregarDetalleBtn" class="btn btn-primary">Agregar al Listado</button>
+            </div>
+        </div>
+    </div>
+
+    <table class="table" id="detallesTable">
+        <thead>
+            <tr>
+                <th>Artículo</th>
+                <th>Marca</th>
+                <th>N° Lote/Serie</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+           
+            
+        </tbody>
+    </table>
+
+    <br /><br />
+    <button type="submit" class="btn btn-success">Guardar Ingreso</button>
+</form>
+     
+
+
+<div class="mt-3">
+    <a asp-action="Index">Ver Listado de Ingresos</a>
+</div>
+
+<!-- Modal para agregar nuevo lote -->
+<div class="modal fade" id="createLoteModal" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" data-bs-keyboard="false" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createLoteModalLabel">Agregar Nuevo N° Lote/Serie</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form id="createLoteForm" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="NumeroLote">Número de Lote/Serie</label>
+                        <input type="text" id="NumeroLote" name="NumeroLote" class="form-control" required autocomplete="off" />
+                        <span id="numeroLoteError" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaElaboracion">Fecha de Elaboración</label>
+                        <input type="date" id="FechaElaboracion" name="FechaElaboracion" class="form-control"  />
+                        <span id="FechaElaboracionError" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="FechaVencimiento">Fecha de Vencimiento</label>
+                        <input type="date" id="FechaVencimiento" name="FechaVencimiento" class="form-control" />
+                        <span id="fechaVencimientoError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+<script>
+    var detallesData = @Html.Raw(Json.Serialize(ViewBag.DetalleIngreso));
+</script>
+
+
+
+

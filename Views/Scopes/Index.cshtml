@@ -1,0 +1,50 @@
+﻿@model IEnumerable<ControlStock.Models.Scope>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-8">
+<h1>Destinos</h1>
+
+<p>
+    <a asp-action="Create">Crear destino nuevo</a>
+</p>
+    <table class="table" id="tabla1" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Nombre del Destino
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ScopeName)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.ScopeId" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Editar">
+                        <i class="fa fa-pencil-square-o"></i>
+                    </a> |                    
+                    <a asp-action="Delete" asp-route-id="@item.ScopeId" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Eliminar">
+                        <i class="fa fa-trash"></i>
+                    </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+<script>
+    var table = new DataTable('#tabla1', {
+        language: {
+            url: '../../lib/DataTables/Language.json',
+        },
+        scrollY: "40vh",
+        deferRender: true,
+        scroller: true
+    });
+</script>

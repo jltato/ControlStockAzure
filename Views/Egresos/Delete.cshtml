@@ -1,0 +1,48 @@
+﻿@model ControlStock.Models.Egresos
+
+@{
+    ViewData["Title"] = "Borrar";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+
+<h1>Borrar Registro</h1>
+
+<h3>Esta seguro que desa Borrar este Registro?</h3>
+<div>
+    <h4>Egresos</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Deposito:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Scope.ScopeName)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha de Egreso:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaEgreso)
+        </dd>
+        <dt class="col-sm-2">
+            Destino:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DestinoScope.ScopeName)
+        </dd>
+        <dt class="col-sm-2">
+            Observaciones:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+    </dl>
+
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="EgresoId" />
+    <input type="submit" value="Borrar" class="btn btn-danger" /> |
+    <a asp-action="Index">ir al Listado</a>
+    </form>
+</div>

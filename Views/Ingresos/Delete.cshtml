@@ -1,0 +1,39 @@
+﻿@model ControlStock.Models.Ingresos
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<h1>Borrar Registro</h1>
+
+<h3>Esta seguro que desa Borrar este Registro?</h3>
+<div>
+    <h4>Ingresos</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+           Comprobante
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Comprobante)
+        </dd>
+        <dt class = "col-sm-2">
+            Fecha de Ingreso
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.FechaIngreso)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Proveedor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Proveedor.ProveedorName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IngresoId" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">ir al Listado</a>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+﻿@model IEnumerable<ControlStock.Models.Marca>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="col-md-8">
+<h1>Marcas</h1>
+
+<p>
+    <a asp-action="Create">Agregar Marca</a>
+</p>
+    <table class="table" id="tabla1" style="width:100%">
+    <thead>
+        <tr>
+            <th>
+                Nombre
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rubro)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.MarcaName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rubro.Name)
+            </td>
+            <td class=" d-flex gap-1">
+                <a asp-action="Edit" asp-route-id="@item.IdMarca" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Editar">
+                    <i class="fa fa-pencil-square-o"></i>
+                </a> |
+                <a asp-action="Details" asp-route-id="@item.IdMarca" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Ver Detalle">
+                    <i class="fa fa-search" aria-hidden="true"></i>
+                </a> |
+                <a asp-action="Delete" asp-route-id="@item.IdMarca" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Eliminar">
+                    <i class="fa fa-trash"></i>
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+</div>
+<script>
+    var table = new DataTable('#tabla1', {
+        language: {
+            url: '../../lib/DataTables/Language.json',
+        },
+        scrollY: "40vh",
+        deferRender: true,
+        scroller: true
+    });
+</script>

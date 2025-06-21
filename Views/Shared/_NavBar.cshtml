@@ -1,0 +1,57 @@
+﻿
+
+<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <div class="container-fluid">
+        
+        <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+            <img src="~/images/icons8-warehouse-100.png" alt="Icono" style="width: 30px; height: 30px; margin-right: 1px;">
+            ControlStock</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <ul class="navbar-nav flex-grow-1">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                </li>
+                <li class=" nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownListados" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Listados </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownListados">                       
+                        <li><a class="dropdown-item" asp-area="" asp-controller="ListadoStock" asp-action="Index">Control de Stock</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Entregas</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Egresos" asp-action="Create">Nueva Entrega</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Egresos" asp-action="Index">Historial de Entregas</a></li>
+                    </ul>
+                </li>
+                <li class=" nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownIngreso" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Ingresos </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownIngreso">
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Ingresos" asp-action="Create"> Nuevo Ingreso </a> </li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Ingresos" asp-action="Index">Historial de Ingresos</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownAdministracion" role="button" data-bs-toggle="dropdown" aria-expanded="false">Administración</a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownAdministracion">
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Articulo" asp-action="Index">Articulos</a></li>
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Marca" asp-action="Index">Marcas</a></li>
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Rubroes" asp-action="Index">Rubros</a></li>
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Scopes" asp-action="Index">Depositos</a></li>
+                        <li> <a class="dropdown-item" asp-area="" asp-controller="Proveedores" asp-action="Index">Proveedores</a></li>
+                    </ul>
+                    
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link " asp-area="Identity" asp-page="/Account/Register">Usuarios</a>
+                </li>
+
+            </ul>
+            <partial name="_LoginPartial" />
+        </div>
+    </div>
+</nav>

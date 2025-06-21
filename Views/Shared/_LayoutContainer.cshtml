@@ -1,0 +1,11 @@
+﻿
+
+@{
+    Layout = "_Layout";  // Especifica que este layout usa _Layout.cshtml
+}
+
+<div class="container">
+    @RenderBody()
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)

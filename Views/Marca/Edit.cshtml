@@ -1,0 +1,41 @@
+﻿@model ControlStock.Models.Marca
+
+@{
+    ViewData["Title"] = "Modificar";
+}
+
+<h1>Modificar</h1>
+
+<h4>Marca</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IdMarca" />
+            <input type="hidden" asp-for="UserId" value="@(ViewBag.UserId)" />
+            <div class="form-group">
+                <label asp-for="IdRubro" class="control-label">Rubro</label>
+                <select asp-for="IdRubro" class="form-control" asp-items="ViewBag.IdRubro"></select>
+                <span asp-validation-for="IdRubro" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="MarcaName" class="control-label"> Nombre</label>
+                <input asp-for="MarcaName" class="form-control" autocomplete="off" />
+                <span asp-validation-for="MarcaName" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary my-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

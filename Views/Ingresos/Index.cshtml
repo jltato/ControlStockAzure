@@ -1,0 +1,119 @@
+﻿@model IEnumerable<ControlStock.Models.Ingresos>
+
+@{
+    ViewData["Title"] = "Ingresos de Productos";
+}
+
+<h1>Ingresos de Productos</h1>
+
+<div class="d-sm-flex justify-content-between">
+    <a asp-action="Create">Cargar Nuevo Ingreso</a>
+    <div class="d-flex gap-1">
+        <label class="align-self-center">Deposito:</label>
+        <select id="deposito" class="form-select" asp-items="ViewBag.depositos">
+        </select>
+    </div>
+</div>
+
+<div class="container container-fluid col-12 col-lg-10 ">
+<table class="table table-hover" id="tabla1" style="width:100%">
+    <thead>
+        <tr>
+            <th class="text-center">
+                Id Ingreso
+            </th>
+            <th class="text-center">
+                Comprobante
+            </th>
+            <th class="text-center">
+                Fecha de Ingreso
+            </th>
+            <th class="text-center">
+                Proveedor
+            </th>
+            <th class="text-center">
+                Observación
+            </th>
+            <th class="text-center">
+                Acciones
+            </th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+
+    </tbody>
+</table>
+</div>
+<script>
+     var detallesData;
+    $(document).ready(function () {
+    var windowHeight = $(window).height();
+    var tableOffsetTop = $('#tabla1').offset().top;
+    var availableHeight = windowHeight - tableOffsetTop - 250; 
+    var indice = parseInt($('#deposito').val());
+    var URL = '/Ingresos/DatosTable/?ScopeID=' + indice;
+    var table = new DataTable('#tabla1', {
+        language: {
+            url: '../../lib/DataTables/Language.json',
+        },
+        scrollY: availableHeight + "px",
+        responsive: true,
+        deferRender: true,
+        processing: true,
+        serverSide: true,
+        
+        ajax: {
+            url: URL,
+            type: 'POST',
+            dataSrc: 'data'
+        },
+        columns: [
+            { data: 'ingreso.ingresoId' },
+            { data: 'ingreso.comprobante' },
+            {
+                data: 'ingreso.fechaIngreso',
+                render: function (data, type, row) {
+                    if (data) {
+                        var date = new Date(data);
+                        var day = String(date.getDate()).padStart(2, '0');
+                        var month = String(date.getMonth() + 1).padStart(2, '0'); // Los meses comienzan en 0
+                        var year = date.getFullYear();
+                        return `${day}/${month}/${year}`;
+                    }
+                    return data;
+                }
+            },
+            { data: 'proveedor.proveedorName' }, 
+            { data: 'ingreso.observaciones'},
+            {
+                data: 'ingreso.ingresoId',
+                orderable: false,
+                searchable: false,
+                render: function (data, type, row) {
+                    return `
+                            <a href='/Ingresos/Edit/${data}' style='text-decoration: none; color:black' data-bs-toggle='tooltip' data-bs-title='Editar'>
+                                <i class='fa fa-pencil-square-o'></i>
+                            </a> |
+                            <a href='/Ingresos/Details/${data}' style='text-decoration: none; color:black' data-bs-toggle='tooltip' data-bs-title='Ver Detalle'>
+                                <i class='fa fa-search' aria-hidden='true'></i>
+                            </a> |
+                            <a href='/Ingresos/Delete/${data}' style='text-decoration: none; color:black' data-bs-toggle='tooltip' data-bs-title='Eliminar'>
+                                <i class='fa fa-trash'></i>
+                            </a>
+                        `;
+                }
+            }
+        ],
+        rowCallback: function (row, data, index) {
+            $(row).on('click', function () {
+                window.location.href = `/Ingresos/Details/${data.ingreso.ingresoId}`;
+            });
+        }       
+    });
+    // Escuchar el evento de cambio en el select con id 'deposito'
+        $('#deposito').change(function () {
+            var indice = parseInt($(this).val());
+            table.ajax.url('/Ingresos/DatosTable/?ScopeID=' + indice).load();
+        });
+    });
+</script>

@@ -1,0 +1,39 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ControlStock</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/lib/dataTables/datatables.min.css" rel="stylesheet">
+    <link href="~/lib/chosen/chosen-bootstrap-5.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="~/ControlStock.styles.css" asp-append-version="true" />
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>    
+    <script src="~/lib/dataTables/datatables.min.js"></script>
+    <script src="~/lib/chosen/chosen.jquery.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+</head>
+<body class="">
+    <header>
+        <partial name="_NavBar" />
+    </header>
+    <div class="container-fluid ">
+        <main role="main" class="pb-3 ">
+            @RenderBody()
+        </main>
+    </div>
+    <footer class="border-top footer text-muted bg-white">
+        <div class="container">
+            &copy; 2024 - ControlStock - <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </div>
+    </footer>   
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>

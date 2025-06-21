@@ -1,0 +1,104 @@
+﻿@model ControlStock.Models.Egresos
+
+@{
+    ViewData["Title"] = "Detalles";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>Entregas</h4>
+    <hr />
+    <dl class="row ">
+        <dt class="col-sm-2">
+            Comprobante:
+            <input id="reportId" type="hidden" value="@Model.EgresoId" />
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EgresoId)
+        </dd>
+        <dt class="col-sm-2">
+            Deposito:
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Scope.ScopeName)
+        </dd>
+        <dt class="col-sm-2">
+            Fecha Egreso:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.FechaEgreso) hs.
+        </dd>
+        <dt class="col-sm-2">
+            Destino:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DestinoScope.ScopeName)
+        </dd>
+        <dt class="col-sm-2">
+            Observaciones:
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Observaciones)
+        </dd>
+    </dl>
+    <!-- Listado de productos -->
+    <h3>Productos</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Artículo
+                </th>
+                <th>
+                    Lote/Serie
+                </th>
+                <th>
+                    Cantidad
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var detalle in ViewBag.Productos)
+            {
+                <tr>
+                    <td>
+                        
+                        @detalle.Articulo.Nombre
+                    </td>
+                    <td>
+                        @detalle.Lote?.NumeroLote
+                    </td>
+                    <td>
+                        @detalle.Cantidad
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+@{
+    // Genera la URL base para la acción de impresión
+    var printUrlTemplate = Url.Action("index", "Reportes", new  {id = Model.EgresoId });
+}
+<div class="d-sm-flex justify-content-between">
+    @* <a asp-action="Edit" asp-route-id="@Model?.EgresoId">Editar</a> | *@
+    <a asp-action="Index">Volver al Listado</a>
+    <button type="button" id="printButton" class="btn btn-success">Imprimir</button>
+</div>
+
+<script>
+    document.getElementById("printButton").addEventListener("click", function() {
+
+        var url = "@printUrlTemplate";
+
+        // Abre el PDF en una nueva ventana
+        var win = window.open(url, '_blank');
+
+        // Espera a que la ventana se abra y cargue completamente antes de llamar a la función de impresión
+        win.onload = function() {
+            win.print();
+        };
+    });
+</script>

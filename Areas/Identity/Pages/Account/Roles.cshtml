@@ -1,0 +1,100 @@
+﻿@page
+@model ControlStock.Areas.Identity.Pages.Account.RolesModel
+@{
+  
+    ViewData["Title"] = "Crear Roles";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div>
+    <div class="row">
+        <div class="col-md-4">
+            <section>
+                <form id="account" method="post">
+                    <h2>Creación de Roles de usuario por secciones y Ambitos.</h2>
+                    <hr />
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+                    <div class="form-floating mb-3">
+                        <input asp-for="Input.RolName" class="form-control" autocomplete="off" aria-required="true"   />
+                        <label asp-for="Input.RolName" class="form-label">Nombre del Rol</label>
+                        <span asp-validation-for="Input.RolName" class="text-danger"></span>
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.SelectedScope" class="form-control" aria-required="true">
+                            <option value="">Seleccione un Ámbito</option>
+                            @foreach (var ambito in Model.Scopes)
+                            {
+                                <option value=@ambito.ScopeId>@ambito.ScopeName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Input.SelectedScope" class="text-danger"></span>
+                        <label asp-for="Input.SelectedScope" class="form-label">Ambitos</label>                      
+                    </div>
+
+
+                    <div class="form-floating mb-3">
+                        <select asp-for="Input.SelectedSection" class="form-control" aria-required="true">
+                            <option value="" >Seleccione una sección</option>
+                            @foreach (var sections in Model.Sections)
+                            {
+                                <option value=@sections.SectionId>@sections.Name</option>
+                            }
+                        </select>
+                        <label class="form-label">Secciones</label>
+                        <span asp-validation-for="Input.SelectedSection" class="text-danger"></span>
+                    </div>
+
+                    <div>
+                        <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Crear Rol</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <div class="col-md-6 col-md-offset-2 mt-3 mt-xl-0 overflow-auto" style="max-height:60vh" >
+
+            <table class="table ">
+
+                @if (Model.RolePermissions == null || Model.RolePermissions.Count == 0)
+                {
+                    <tr>
+                        <td>
+                            <h3> No hay Roles Disponibles </h3>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <thead>
+                        <tr>
+                            <td> Rol </td>
+                            <td> Sección </td>
+                            <td> Ámbito </td>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model.RolePermissions)
+                    {
+                        <tr>
+                            <td>
+                                <strong> @item.RoleName </strong>
+                            </td>
+                            <td>
+                                <strong> @item.SectionName </strong>
+                            </td>
+                            <td>
+                                <strong> @item.ScopeName </strong>
+                            </td>
+                        </tr>
+                    }
+                }
+            </table>
+
+
+        </div>
+    </div>
+
+
+</div>

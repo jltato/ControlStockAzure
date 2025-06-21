@@ -1,0 +1,59 @@
+﻿@model ControlStock.Models.Proveedor
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Editar Proveedor</h1>
+
+<h4>Proveedor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ProveedorId" />
+            <input asp-for="UserId" type="hidden" value="@ViewBag.UserId" />
+            <div class="form-group">
+                <label for="SectionId" class="control-label">Sección</label>
+                <select id="SectionId" name="SectionId" asp-items="ViewBag.Sections" class="form-control"></select>
+                @if (ViewBag.SectionIdError != null)
+                {
+                    <span class="text-danger">@ViewBag.SectionIdError</span>
+                }
+            </div>
+            <div class="form-group">
+                <label asp-for="ProveedorName" class="control-label">Nombre</label>
+                <input asp-for="ProveedorName" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ProveedorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProveedorAdress" class="control-label">Dirección</label>
+                <input asp-for="ProveedorAdress" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ProveedorAdress" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProveedorPhone" class="control-label">Teléfono</label>
+                <input type="tel" asp-for="ProveedorPhone" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ProveedorPhone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProveedorMail" class="control-label">E-Mail</label>
+                <input type="email" asp-for="ProveedorMail" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ProveedorMail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary my-3" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

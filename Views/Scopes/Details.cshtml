@@ -1,0 +1,24 @@
+﻿@model ControlStock.Models.Scope
+
+@{
+    ViewData["Title"] = "Detalles";
+}
+
+<h1>Detalle</h1>
+
+<div>
+    <h4>Destinos</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.ScopeName)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScopeName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.ScopeId">Editar</a> |
+    <a asp-action="Index">Volver al Listado</a>
+</div>

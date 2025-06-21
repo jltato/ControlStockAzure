@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Layout";  // Especifica que este layout usa _Layout.cshtml
+}
+
+    <div class="d-sm-flex gap-2" style="height:-webkit-fill-available;">
+        <div class="col-sm-2 bg-light border-end" >
+            <partial name="_LeftNavPartial" />
+        </div>
+        <div class="container align-content-start">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+@await RenderSectionAsync("Scripts", required: false)

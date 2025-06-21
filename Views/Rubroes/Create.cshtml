@@ -1,0 +1,41 @@
+﻿@model ControlStock.Models.Rubro
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+   
+}
+
+<h1>Crear</h1>
+
+<h4>Rubro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Section" class="control-label">Sección</label>
+                    <select asp-for="SectionId" asp-items="ViewBag.Sections" class="form-control"></select>
+                    <span asp-validation-for="SectionId" class="text-danger"></span>          
+            </div>
+            <div class="form-group">
+                <label asp-for="Name" class="control-label">Nombre</label>
+                <input asp-for="Name" class="form-control" autocomplete="off" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary my-2" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

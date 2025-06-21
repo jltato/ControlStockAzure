@@ -1,0 +1,76 @@
+﻿@model IEnumerable<ControlStock.Models.Proveedor>
+
+@{
+    ViewData["Title"] = "Proveedores";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+
+<h1>Proveedores</h1>
+
+<p>
+    <a asp-action="Create">Agregar Proveedor</a>
+    
+</p>
+<div class="overflow-auto col-sm-8">
+    <table class="table" id="tabla1" style="width:100%">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Dirección
+                </th>
+                <th class="text-start">
+                    Teléfono
+                </th>
+                <th class="text-start">
+                    Mail
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProveedorName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProveedorAdress)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProveedorPhone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProveedorMail)
+                    </td>
+                    <td class=" d-flex gap-1">
+                        <a asp-action="Edit" asp-route-id="@item.ProveedorId" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Editar">
+                            <i class="fa fa-pencil-square-o"></i>
+                        </a> |
+                        
+                        <a asp-action="Delete" asp-route-id="@item.ProveedorId" style="text-decoration: none; color:black" data-bs-toggle="tooltip" data-bs-title="Eliminar">
+                            <i class="fa fa-trash"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+   
+     
+</div>
+<script>
+    var table = new DataTable('#tabla1', {
+        language: {
+            url: '../../lib/DataTables/Language.json',
+        },
+        scrollY: "40vh",
+        deferRender: true,
+        scroller: true
+    });
+</script>

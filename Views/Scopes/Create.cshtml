@@ -1,0 +1,35 @@
+﻿@model ControlStock.Models.Scope
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+<h1>Crear</h1>
+
+<h4>Destino</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <input type="hidden" name="returnUrl" value="@ViewBag.ReturnUrl" />
+            <input type="hidden" asp-for="UserId" value="@ViewBag.UserId" />
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ScopeName" class="control-label">Nombre del Destino:</label>
+                <input asp-for="ScopeName" class="form-control" autocomplete="off" />
+                <span asp-validation-for="ScopeName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Crear" class="btn btn-primary my-3" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,27 @@
+﻿@model ControlStock.Models.Scope
+
+@{
+    ViewData["Title"] = "Borrar";
+}
+
+<h1>Borrar</h1>
+
+<h3>Seguro que desea borrar este destino?</h3>
+<div>
+    <h4>Destinos</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nombre:
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ScopeName)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="ScopeId" />
+        <input type="submit" value="Borrar" class="btn btn-danger" /> |
+        <a asp-action="Index">Volver al Listado</a>
+    </form>
+</div>

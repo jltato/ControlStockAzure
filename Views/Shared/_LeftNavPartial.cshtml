@@ -1,0 +1,36 @@
+﻿<!-- Usando Bootstrap para el diseño del sidebar -->
+
+
+<!-- nav-scrollable -->
+<nav class=" navbar navbar-expand-sm navbar-toggleable-sm navbar-light flex-sm-column mb-3 ms-4 m-sm-5"  >
+    <a class="navbar-brand d-none d-sm-block fs-3 mb-2" asp-area="" asp-controller="Articulo" asp-action="Index">Menú</a>
+    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between justify-content-lg-start menu">
+        <ul class="nav nav-pills flex-column mb-auto list-group">            
+            <li class="nav-item ">
+                <a class="nav-link gap-2 text-dark @(ViewContext.RouteData.Values["Controller"]?.ToString()== "Articulo" ? "active" : "")" asp-area="" asp-controller="Articulo" asp-action="Index" rout>Articulos</a>
+            </li>          
+            <li class="nav-item">
+                <a class="nav-link gap-2 text-dark @(ViewContext.RouteData.Values["Controller"]?.ToString()== "Marca" ? "active" : "")" asp-area="" asp-controller="Marca" asp-action="Index">Marcas</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link gap-2 text-dark @(ViewContext.RouteData.Values["Controller"]?.ToString()== "Rubroes" ? "active" : "") " asp-area="" asp-controller="Rubroes" asp-action="Index">Rubros</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link gap-2 text-dark @(ViewContext.RouteData.Values["Controller"]?.ToString()== "Scopes" ? "active" : "") " asp-area="" asp-controller="Scopes" asp-action="Index">Destinos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link gap-2 text-dark @(ViewContext.RouteData.Values["Controller"]?.ToString()== "Proveedores" ? "active" : "") " asp-area="" asp-controller="Proveedores" asp-action="Index">Proveedores</a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
+
+
+<script>
+    $(document).ready(function () {
+        $('#nav-toggler').click(function () {
+            $('#nav-menu').toggleClass('collapse');
+        });
+    });
+</script>

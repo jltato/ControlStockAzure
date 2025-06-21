@@ -1,0 +1,77 @@
+﻿@model ControlStock.Models.DepositoArticuloLote
+
+@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_LayoutContainer.cshtml";
+}
+
+<h1>Modificar</h1>
+
+<h4>Lote</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="ArticuloId" />
+            <input type="hidden" asp-for="ScopeId" />            
+            <input type="hidden" asp-for="DepositoArticuloLoteId" />
+
+            <div class="form-group">
+                <label asp-for="Cantidad" class="control-label"></label>
+                <input asp-for="Cantidad" class="form-control" />
+                <span asp-validation-for="Cantidad" class="text-danger"></span>
+            </div>
+
+            @if (Model.Lote != null)
+            {
+                <input type="hidden" asp-for="Lote.LoteId" />
+                <div class="form-group">
+                    <label asp-for="Lote.NumeroLote" class="control-label"></label>
+                    <input asp-for="Lote.NumeroLote" class="form-control" />
+                    <span asp-validation-for="Lote.NumeroLote" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lote.FechaElaboracion" class="control-label"></label>
+                    <input type="date" asp-for="Lote.FechaElaboracion" class="form-control" />
+                    <span asp-validation-for="Lote.FechaElaboracion" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Lote.FechaVencimiento" class="control-label"></label>
+                    <input type="date" asp-for="Lote.FechaVencimiento" class="form-control" />
+                    <span asp-validation-for="Lote.FechaVencimiento" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group">
+                    <label class="control-label">Número de Lote</label>
+                    <input  class="form-control" disabled  />
+                    <span class="text-danger">Lote no disponible</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Elaboración</label>
+                    <input type="date" class="form-control" disabled />
+                    <span class="text-danger">Fecha de elaboración no disponible</span>
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Fecha de Vencimiento</label>
+                    <input type="date" class="form-control" disabled />
+                    <span class="text-danger">Fecha de vencimiento no disponible</span>
+                </div>
+            }
+
+            <div class="form-group">
+                <input type="submit" value="Guardar" class="btn btn-primary my-3" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Volver al Listado</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
