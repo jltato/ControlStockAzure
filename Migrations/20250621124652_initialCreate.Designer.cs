@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControlStock.Migrations
 {
     [DbContext(typeof(MyDbContext))]
-    [Migration("20240826145053_Egresos2")]
-    partial class Egresos2
+    [Migration("20250621124652_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -245,6 +245,10 @@ namespace ControlStock.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EgresoId"));
 
+                    b.Property<int?>("Destino")
+                        .IsRequired()
+                        .HasColumnType("int");
+
                     b.Property<bool>("EliminadoLogico")
                         .HasColumnType("bit");
 
@@ -260,6 +264,9 @@ namespace ControlStock.Migrations
                     b.Property<int>("ScopeId")
                         .HasColumnType("int");
 
+                    b.Property<int>("SectionId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("Timestamp")
                         .HasColumnType("datetime2");
 
@@ -269,7 +276,11 @@ namespace ControlStock.Migrations
 
                     b.HasKey("EgresoId");
 
+                    b.HasIndex("Destino");
+
                     b.HasIndex("ScopeId");
+
+                    b.HasIndex("SectionId");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("IX_Egresos_UserId");
@@ -750,12 +761,27 @@ namespace ControlStock.Migrations
 
             modelBuilder.Entity("ControlStock.Models.Egresos", b =>
                 {
+                    b.HasOne("ControlStock.Models.Scope", "DestinoScope")
+                        .WithMany()
+                        .HasForeignKey("Destino")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("ControlStock.Models.Scope", "Scope")
                         .WithMany("Egresos")
                         .HasForeignKey("ScopeId")
                         .IsRequired();
 
+                    b.HasOne("ControlStock.Models.Section", "Section")
+                        .WithMany("Egresos")
+                        .HasForeignKey("SectionId")
+                        .IsRequired();
+
+                    b.Navigation("DestinoScope");
+
                     b.Navigation("Scope");
+
+                    b.Navigation("Section");
                 });
 
             modelBuilder.Entity("ControlStock.Models.Ingresos", b =>
@@ -965,6 +991,8 @@ namespace ControlStock.Migrations
 
             modelBuilder.Entity("ControlStock.Models.Section", b =>
                 {
+                    b.Navigation("Egresos");
+
                     b.Navigation("Rubros");
 
                     b.Navigation("SectionProveedores");

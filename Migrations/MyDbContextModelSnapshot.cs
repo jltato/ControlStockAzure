@@ -242,7 +242,8 @@ namespace ControlStock.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("EgresoId"));
 
-                    b.Property<int>("Destino")
+                    b.Property<int?>("Destino")
+                        .IsRequired()
                         .HasColumnType("int");
 
                     b.Property<bool>("EliminadoLogico")
