@@ -55,7 +55,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account.Manage
             /// </summary>
             [Required]
             [DataType(DataType.Password)]
-            [Display(Name = "Contrase�a anterior")]
+            [Display(Name = "Contraseña anterior")]
             public string OldPassword { get; set; }
 
             /// <summary>
@@ -63,9 +63,9 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [Required]
-            [StringLength(100, ErrorMessage = "La {0} debe tener un minimo de {2} y un maximo de {1} caracteres de largo.", MinimumLength = 6)]
+            [StringLength(100, ErrorMessage = "La {0} debe tener un mínimo de {2} y un máximo de {1} caracteres de largo.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Nueva Contrase�a")]
+            [Display(Name = "Nueva Contraseña")]
             public string NewPassword { get; set; }
 
             /// <summary>
@@ -73,8 +73,8 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account.Manage
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirmar Contrase�a")]
-            [Compare("NewPassword", ErrorMessage = "La nueva contrase�a y la contrase�a de confirmaci�n no coinciden.")]
+            [Display(Name = "Confirmar Contraseña")]
+            [Compare("NewPassword", ErrorMessage = "La nueva contraseña y la contraseña de confirmación no coinciden.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -127,8 +127,8 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account.Manage
             {
                 await _signInManager.RefreshSignInAsync(user);
 
-                _logger.LogInformation("El usuario cambi� su contrase�a exitosamente.");
-                StatusMessage = "Su contrase�a ha sido cambiada exitosamente.";
+                _logger.LogInformation("El usuario cambió su contraseña exitosamente.");
+                StatusMessage = "Su contraseña ha sido cambiada exitosamente.";
             }
             return RedirectToPage();
         }
