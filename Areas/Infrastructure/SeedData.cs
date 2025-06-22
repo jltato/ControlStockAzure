@@ -20,9 +20,9 @@ namespace ControlStock.Areas.Infrastructure
             context.Database.Migrate();
 
             // Crear rol administrador si no existe
-            string adminRole = "ADMINISTRADOR";
-            string userRole = "USUARIO";
-            string coordRole= "COORDINADOR";
+            string adminRole = "Administrador";
+            string userRole = "Usuario";
+            string coordRole= "Coordinador";
             if (!await roleManager.RoleExistsAsync(adminRole))
             {
                 await roleManager.CreateAsync(new IdentityRole(adminRole));

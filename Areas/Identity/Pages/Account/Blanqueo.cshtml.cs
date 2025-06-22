@@ -80,7 +80,7 @@ namespace SUAP_PortalOficios.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                StatusMessage = "La contraseña ha sido blanqueada correctamente. El Usuario debera cambiar la contraseña en el proximo inicio de sesión";
+                StatusMessage = "La contraseï¿½a ha sido blanqueada correctamente. El Usuario debera cambiar la contraseï¿½a en el proximo inicio de sesiï¿½n";
                 
                 return Page();
             }
@@ -90,10 +90,10 @@ namespace SUAP_PortalOficios.Areas.Identity.Pages.Account
 
         public class PasswordModel
         {
-            [Required(ErrorMessage = "La contraseña es obligatoria")]
+            [Required(ErrorMessage = "La contraseï¿½a es obligatoria")]
             [StringLength(100, ErrorMessage = "La {0} debe tener como minimo {2} y maximo {1} caracteres de largo.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Contraseña")]
+            [Display(Name = "Contraseï¿½a")]
             public string Password { get; set; }
         }
     }

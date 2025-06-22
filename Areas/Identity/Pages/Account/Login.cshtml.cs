@@ -139,7 +139,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Intento de inicio de Seción invalido.");
+                    ModelState.AddModelError(string.Empty, "Intento de inicio de Seciï¿½n invalido.");
                     return Page();
                 }
             }

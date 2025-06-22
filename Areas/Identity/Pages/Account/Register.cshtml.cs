@@ -93,10 +93,10 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required(ErrorMessage = "La contraseña es obligatoria")]
+            [Required(ErrorMessage = "La contraseï¿½a es obligatoria")]
             [StringLength(100, ErrorMessage = "La {0} debe tener como minimo {2} y maximo {1} caracteres de largo.", MinimumLength = 6)]
             [DataType(DataType.Password)]
-            [Display(Name = "Contraseña")]
+            [Display(Name = "Contraseï¿½a")]
             public string Password { get; set; }
 
             /// <summary>
@@ -105,7 +105,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
             /// </summary>
             [DataType(DataType.Password)]
             [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "La contraseña y la confirmación no coinciden.")]
+            [Compare("Password", ErrorMessage = "La contraseï¿½a y la confirmaciï¿½n no coinciden.")]
             public string ConfirmPassword { get; set; }
         }
 
@@ -135,7 +135,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                                UserId = user.Id,
                                UserName = user.NormalizedUserName,
                                Nombre = user.Nombre,
-                               IsLockedOut = user.LockoutEnd.HasValue && user.LockoutEnd > DateTimeOffset.Now // Indica si está bloqueado
+                               IsLockedOut = user.LockoutEnd.HasValue && user.LockoutEnd > DateTimeOffset.Now // Indica si estï¿½ bloqueado
                            })
                            .ToListAsync();
             }
@@ -147,7 +147,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                         .FirstOrDefault();
 
                     Usuarios = await _userManager.Users
-                        .Where(anu => anu.Id != thisUser.Id && // Excluye el UserId específico
+                        .Where(anu => anu.Id != thisUser.Id && // Excluye el UserId especï¿½fico
                                       _context.UserPermissions
                                           .Any(up => up.UserId == anu.Id && up.SectionId == userSectionId)
                                        )
@@ -156,7 +156,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                             UserId = anu.Id,
                             UserName = anu.UserName,
                             Nombre = anu.Nombre,
-                            IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si está bloqueado
+                            IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si estï¿½ bloqueado
                         })
                         .ToListAsync();
             }
@@ -168,7 +168,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                     .FirstOrDefault();
 
                 Usuarios = await _userManager.Users
-                    .Where(anu => anu.Id != thisUser.Id && // Excluye el UserId específico
+                    .Where(anu => anu.Id != thisUser.Id && // Excluye el UserId especï¿½fico
                                   _context.UserPermissions
                                       .Any(up => up.UserId == anu.Id && up.ScopeId == userScopeId)
                                    )
@@ -177,7 +177,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                         UserId = anu.Id,
                         UserName = anu.UserName,
                         Nombre = anu.Nombre,
-                        IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si está bloqueado
+                        IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si estï¿½ bloqueado
                     })
                     .ToListAsync();
             }
@@ -208,7 +208,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                                 UserId = anu.Id,
                                 UserName = anu.NormalizedUserName,
                                 Nombre = anu.Nombre,
-                                IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si está bloqueado
+                                IsLockedOut = anu.LockoutEnd.HasValue && anu.LockoutEnd > DateTimeOffset.Now // Indica si estï¿½ bloqueado
                            
                             })
                             .OrderBy(a => a.Nombre)
@@ -242,7 +242,7 @@ namespace PruebaIdentity.Areas.Identity.Pages.Account
                 {
                     if (error.Code == "DuplicateUserName")
                     {
-                        ModelState.AddModelError("Input.UserName", "El nombre de usuario ya está en uso.");
+                        ModelState.AddModelError("Input.UserName", "El nombre de usuario ya estï¿½ en uso.");
                     }
                     else
                     {
