@@ -1,14 +1,15 @@
+using ControlStock.Areas.Infrastructure;
 using ControlStock.Data;
-using Microsoft.EntityFrameworkCore;
-using Serilog;
-using Microsoft.AspNetCore.Identity;
 using ControlStock.Models;
-using Rotativa.AspNetCore;
-using jsreport.Local;
-using jsreport.Binary;
 using jsreport.AspNetCore;
+using jsreport.Binary;
+using jsreport.Local;
 using jsreport.Types;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.SqlServer.Server;
+using Rotativa.AspNetCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -85,7 +86,14 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<MyDbContext>();
-    db.Database.Migrate();    
+    db.Database.Migrate();
+}
+
+// Aplicar usuario admin al iniciar
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    await SeedData.InitializeAsync(services);
 }
 
 // Configure the HTTP request pipeline.
