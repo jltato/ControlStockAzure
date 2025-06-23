@@ -24,7 +24,10 @@ namespace ControlStock.Controllers
         // GET: Scopes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Scopes.ToListAsync());
+            var scopes = await _context.Scopes
+                .Where(s => s.ScopeId != 1)
+                .ToListAsync();
+            return View(scopes);
         }
 
         // GET: Scopes/Details/5

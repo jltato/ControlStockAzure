@@ -331,12 +331,12 @@ namespace SUAP_PortalOficios.Areas.Identity.Pages.Account
 
         public class InputModel
         {           
-            [Required(ErrorMessage = "La secci�n es obligatoria.")]
-            [Display(Name = "Secci�n")]
+            [Required(ErrorMessage = "La sección es obligatoria.")]
+            [Display(Name = "Sección")]
             public int SelectedSection { get; set; }
 
-            [Required(ErrorMessage = "El �mbito es obligatorio.")]
-            [Display(Name = "�mbito")]
+            [Required(ErrorMessage = "El ámbito es obligatorio.")]
+            [Display(Name = "Ámbito")]
             public int SelectedScope { get; set; }        
         }
 

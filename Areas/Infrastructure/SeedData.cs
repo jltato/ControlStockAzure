@@ -43,21 +43,20 @@ namespace ControlStock.Areas.Infrastructure
                     Email = "admin@local",
                     EmailConfirmed = true
                 };
-
                 var result = await userManager.CreateAsync(user, adminPassword);
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, adminRole);
+                }           
+                // Agregar otros datos necesarios (por ejemplo Scopes y Sections)
+                if (!await context.Scopes.AnyAsync() || !await context.Sections.AnyAsync())
+                {
+                    context.Scopes.Add(new Scope { ScopeName  = "Todos", CreatedDate = DateTime.Now, EliminadoLogico = false, UserId = user.Id });                
+                    context.Sections.Add(new Section { Name = "Todos", Abreviatura="Todos" });
+                    await context.SaveChangesAsync();
+                    context.UserPermissions.Add(new UserPermission { UserId = user.Id, ScopeId =1, SectionId = 1 });
+                    await context.SaveChangesAsync();
                 }
-            }
-
-            // Agregar otros datos necesarios (por ejemplo Scopes)
-            if (!await context.Scopes.AnyAsync())
-            {
-                context.Scopes.AddRange(
-                    new Scope { ScopeName  = "Deposito General" }                   
-                );
-                await context.SaveChangesAsync();
             }
         }
     }
